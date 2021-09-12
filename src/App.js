@@ -1,9 +1,15 @@
+import Login from './components/Login';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      hello
+      <Router>
+        <Switch>
+          <Route exact path='/' component={Login}></Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
