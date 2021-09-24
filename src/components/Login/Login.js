@@ -7,7 +7,11 @@ const Login = props => {
     <Container>
       <Content>
         <BackgroundImage/>
-        <div>asdasdas</div>
+        <CTA>
+          <CTAText>Con Combo+, aprovecha lo mejor de Disney+ y Star+ a un precio único.</CTAText>
+          <CTALogoOne src="/images/cta-logo-one.svg"/>
+          asdas
+        </CTA>
       </Content>
       <Content>
         <div>asdasda</div>
@@ -41,7 +45,7 @@ const Content = styled.div`
 `;
 
 const BackgroundImage = styled.div`
-  background-image: url("/images/login-background.jpeg");
+  background-image: url("/images/login-background.jpg");
   position: absolute;
   top: 0;
   rigth: 0;
@@ -55,6 +59,30 @@ const BackgroundImage = styled.div`
   overflow: hidden;
 `;
 
+const CTA = styled.div `
+  max-width: 650px;
+  margin-bottom: 2vw;
+  margin-left: auto
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+`;
+
+const CTAText = styled.p`
+  padding-left: 10vw;
+  padding-right: 10vw;
+  margin-top: 20vh;
+`;
+
+const CTALogoOne = styled.img`
+  margin-bottom: 12px;
+  max-width: 600px;
+  min-heihgt: 1px;
+  display: flex;
+  width: 100%;
+`;
 
 Login.propTypes = {
   
