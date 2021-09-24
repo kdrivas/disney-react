@@ -8,18 +8,15 @@ const Login = props => {
       <Content>
         <BackgroundImage/>
         <CTA>
-          <CTAText>Con Combo+, aprovecha lo mejor de Disney+ y Star+ a un precio único.</CTAText>
           <CTALogoOne src="/images/cta-logo-one.svg"/>
-          asdas
+          <SignUp>GET ALL THERE</SignUp>
+          <Description>
+            Get Premier Access to Raya and the Last Dragon for an additional fee
+            with a Disney+ subscription. As of 03/26/21, the price of Disney+
+            and The Disney Bundle will increase by $1.
+          </Description>
+          <CTALogoTwo src="images/cta-logo-two.png"/>
         </CTA>
-      </Content>
-      <Content>
-        <div>asdasda</div>
-        <div>asdasdas</div>
-      </Content>
-      <Content>
-        <div>asdasda</div>
-        <div>asdasdas</div>
       </Content>
     </Container>
   );
@@ -55,32 +52,53 @@ const BackgroundImage = styled.div`
   z-index: -1;
   background-position: top;
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
   overflow: hidden;
 `;
 
 const CTA = styled.div `
   max-width: 650px;
-  margin-bottom: 2vw;
-  margin-left: auto
-  margin-right: auto;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
-`;
-
-const CTAText = styled.p`
-  padding-left: 10vw;
-  padding-right: 10vw;
-  margin-top: 20vh;
+  margin-top: 0;
+  margin-bottom: 2vw;
 `;
 
 const CTALogoOne = styled.img`
   margin-bottom: 12px;
   max-width: 600px;
   min-heihgt: 1px;
-  display: flex;
+  display: block;
+  width: 100%;
+`;
+
+const SignUp = styled.a`
+  font-weight: bold;
+  color: #f9f9f9;
+  background: #0063e5;
+  width: 100%;
+  font-size: 18px;
+  padding: 16.5px 0;
+  border-radius: 4px;
+
+  &:hover {
+    background: #0483ee;
+  }
+`;
+
+const Description = styled.p`
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  line-height: 1.5;
+`;
+
+const CTALogoTwo = styled.img`
+  max-width: 600px;
+  margin-bottom: 20px;
   width: 100%;
 `;
 
