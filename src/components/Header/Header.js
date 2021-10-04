@@ -1,12 +1,27 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { auth, provider } from './../../firebase';
+import {
+  selectUserEmail,
+  selectUserName,
+  selectUserPhoto,
+  setUserLoginDetails
+} from './../../features/user/userSlice';
 
 const Header = props => {
+  const dispatch = useDispatch();
+  const userName = useSelector(selectUserName);
+  const userPhoto = useSelector(selectUserPhoto);
 
   const handleAuth = () => {
-    auth.signInWithPopop(provider).then((result) => {
-      console.log(result);
+    auth.signInWithPopup(provider).then((result) => {
+      dispatch(setUserLoginDetails, {
+        name: result.displayName,
+        email: result.email,
+        photo: result.photoURL
+      });
     }).catch(error => {
       console.log(error);
     })
@@ -43,9 +58,7 @@ const Header = props => {
           <span>SERIES</span>
         </a>
       </NavMenu>
-      <Login onClick={handleAuth}>
-        LOGIN
-      </Login>
+      {!userName ? <Login onClick={handleAuth}>LOGIN</Login>: <></>}
     </Nav>
   );
 };
