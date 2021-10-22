@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
@@ -12,53 +12,75 @@ import {
 
 const Header = props => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const userName = useSelector(selectUserName);
   const userPhoto = useSelector(selectUserPhoto);
 
+  useEffect(() => {
+    auth.onAuthStateChanged( async (user) => {
+      if (user) {
+        dispatch(setUserLoginDetails({
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL
+        }));
+        history.push('/home');
+      }
+    })
+  }, [userName])
+
   const handleAuth = () => {
     auth.signInWithPopup(provider).then((result) => {
-      dispatch(setUserLoginDetails, {
-        name: result.displayName,
-        email: result.email,
-        photo: result.photoURL
-      });
+      dispatch(setUserLoginDetails({
+        name: result.user.displayName,
+        email: result.user.email,
+        photo: result.user.photoURL
+      }));
     }).catch(error => {
       console.log(error);
     })
   };
+  console.log('hola', userPhoto);
 
   return (
     <Nav>
       <Logo>
         <img src="images/logo.svg"></img>
       </Logo>
-      <NavMenu>
-        <a href="/home">
-          <img src="images/home-icon.svg" alt="HOME"></img>
-          <span>HOME</span>
-        </a>
-        <a>
-          <img src="/images/search-icon.svg" alt="SEARCH" />
-          <span>SEARCH</span>
-        </a>
-        <a>
-          <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
-          <span>WATCHLIST</span>
-        </a>
-        <a>
-          <img src="/images/original-icon.svg" alt="ORIGINALS" />
-          <span>ORIGINALS</span>
-        </a>
-        <a>
-          <img src="/images/movie-icon.svg" alt="MOVIES" />
-          <span>MOVIES</span>
-        </a>
-        <a>
-          <img src="/images/series-icon.svg" alt="SERIES" />
-          <span>SERIES</span>
-        </a>
-      </NavMenu>
-      {!userName ? <Login onClick={handleAuth}>LOGIN</Login>: <></>}
+      
+      {!userName ? 
+        <Login onClick={handleAuth}>
+          LOGIN
+        </Login> : 
+        <>
+          <NavMenu>
+            <a href="/home">
+              <img src="images/home-icon.svg" alt="HOME"></img>
+              <span>HOME</span>
+            </a>
+            <a>
+              <img src="/images/search-icon.svg" alt="SEARCH" />
+              <span>SEARCH</span>
+            </a>
+            <a>
+              <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
+              <span>WATCHLIST</span>
+            </a>
+            <a>
+              <img src="/images/original-icon.svg" alt="ORIGINALS" />
+              <span>ORIGINALS</span>
+            </a>
+            <a>
+              <img src="/images/movie-icon.svg" alt="MOVIES" />
+              <span>MOVIES</span>
+            </a>
+            <a>
+              <img src="/images/series-icon.svg" alt="SERIES" />
+              <span>SERIES</span>
+            </a>
+          </NavMenu>
+          <UserImg src={userPhoto}/>
+        </>}
     </Nav>
   );
 };
@@ -85,7 +107,7 @@ const Logo = styled.a`
 
   img {
     display: block;
-    width: 100%auto;
+    width: 100% auto;
   }
 `;
 
@@ -161,6 +183,18 @@ const Login = styled.a`
     background-color: #f9f9f9;
     color: black;
   }
+`;
+
+const UserImg = styled.img`
+  height: 100%;
+`;
+
+const DropDown = styled.div`
+
+`;
+
+const SignOut = styled.div`
+
 `;
 
 export default Header;
