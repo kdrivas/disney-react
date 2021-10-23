@@ -79,7 +79,10 @@ const Header = props => {
               <span>SERIES</span>
             </a>
           </NavMenu>
-          <UserImg src={userPhoto}/>
+          <SignOut>
+            <UserImg src={userPhoto}/>
+            <DropDown>Sign out</DropDown>
+          </SignOut>
         </>}
     </Nav>
   );
@@ -187,14 +190,37 @@ const Login = styled.a`
 
 const UserImg = styled.img`
   height: 100%;
+  border-radius: 50%;
 `;
 
 const DropDown = styled.div`
-
+  position: absolute;
+  top: 48px;
+  right: 0px;
+  background-color: rgb(19,19,19);
+  border: 1px solid rgba(151,151,151,0.39);
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 14px;
+  width: 100px;
+  display: none;
+  opacity: 0;
 `;
 
 const SignOut = styled.div`
+  position: relative;
+  height: 48px;
+  width: 48px;
+  display: flex;
+  cursor: pointer;
 
+  &:hover {
+    ${DropDown} {
+      display: block;
+      opacity: 1;
+      transition-duration: 0.25s;
+    }
+  }
 `;
 
 export default Header;
