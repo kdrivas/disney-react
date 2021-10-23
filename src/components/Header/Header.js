@@ -4,10 +4,10 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { auth, provider } from './../../firebase';
 import {
-  selectUserEmail,
   selectUserName,
   selectUserPhoto,
-  setUserLoginDetails
+  setUserLoginDetails,
+  setSignOutState
 } from './../../features/user/userSlice';
 
 const Header = props => {
@@ -30,15 +30,25 @@ const Header = props => {
   }, [userName])
 
   const handleAuth = () => {
-    auth.signInWithPopup(provider).then((result) => {
-      dispatch(setUserLoginDetails({
-        name: result.user.displayName,
-        email: result.user.email,
-        photo: result.user.photoURL
-      }));
-    }).catch(error => {
-      console.log(error);
-    })
+    if (!userName){
+      auth.signInWithPopup(provider).then((result) => {
+        dispatch(setUserLoginDetails({
+          name: result.user.displayName,
+          email: result.user.email,
+          photo: result.user.photoURL
+        }));
+      }).catch(error => {
+        console.log(error);
+      })
+    }
+    else {
+      auth.signOut().then(() => {
+        dispatch(setSignOutState());
+        history.push('/');
+      }).catch(error => {
+        console.log(error);
+      })
+    }
   };
   console.log('hola', userPhoto);
 
@@ -81,7 +91,9 @@ const Header = props => {
           </NavMenu>
           <SignOut>
             <UserImg src={userPhoto}/>
-            <DropDown>Sign out</DropDown>
+            <DropDown>
+              <span onClick={handleAuth}>Sign out</span>
+            </DropDown>
           </SignOut>
         </>}
     </Nav>
